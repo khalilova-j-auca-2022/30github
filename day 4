@@ -1,0 +1,23 @@
+#include <iostream>
+
+int main() {
+    int total_students = 23;
+    int drawing_only = 9;
+    int gym_or_choreo = 15;
+    int drawing_and_gym = 5;
+    int all_three = 6;
+    int no_course = 2;
+
+    // Найдем студентов, выбравших хотя бы один курс
+    int students_with_courses = total_students - no_course;
+    
+    // Найдем студентов, выбравших только гимнастику или хореографию
+    int gym_or_choreo_only = gym_or_choreo - all_three;
+    
+    // Найдем студентов, выбравших рисование и хореографию
+    int drawing_and_choreo = students_with_courses - (drawing_only + gym_or_choreo_only + drawing_and_gym + all_three);
+
+    std::cout << "Students who chose both Drawing and Choreography: " << drawing_and_choreo << std::endl;
+    
+    return 0;
+}
