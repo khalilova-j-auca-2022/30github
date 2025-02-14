@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int calculateTravelCost() {
+    const int highSeasonPrice = 500;  
+    const int lowSeasonPrice = 200;   
+    
+  
+    srand(time(0));  // Инициализация генератора случайных чисел
+    int season = rand() % 2;  // 0 - низкий сезон, 1 - высокий сезон
+    
+    if (season == 1) {
+        return highSeasonPrice;
+    } else {
+        return lowSeasonPrice;
+    }
+}
+
+int main() {
+    int price = calculateTravelCost();
+    if (price == 500) {
+        cout << "Стоимость билета для высокого сезона: 500 евро" << endl;
+    } else {
+        cout << "Стоимость билета для низкого сезона: 200 евро" << endl;
+    }
+    
+    return 0;
+}
