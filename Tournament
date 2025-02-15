@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Tournament {
+    string name;
+    string date;
+    string location;
+    bool approved;
+};
+
+vector<Tournament> tournaments;
+
+void createTournament() {
+    Tournament t;
+    cout << "Enter tournament name: ";
+    getline(cin, t.name);
+    cout << "Enter date: ";
+    getline(cin, t.date);
+    cout << "Enter location: ";
+    getline(cin, t.location);
+    t.approved = false;
+    tournaments.push_back(t);
+    cout << "Tournament created.\n";
+}
+
+void listTournaments() {
+    if (tournaments.empty()) {
+        cout << "No tournaments available.\n";
+        return;
+    }
+    for (size_t i = 0; i < tournaments.size(); i++) {
+        cout << i + 1 << ". " << tournaments[i].name 
+             << " (" << tournaments[i].date << ") - " 
+             << (tournaments[i].approved ? "Approved" : "Pending") << "\n";
+    }
+}
+
+void approveTournament() {
+    listTournaments();
+    if (tournaments.empty()) return;
+    int index;
+    cout << "Enter tournament number to approve: ";
+    cin >> index;
+    if (index > 0 && index <= tournaments.size()) {
+        tournaments[index - 1].approved = true;
+        cout << "Tournament approved.\n";
+    } else {
+        cout << "Invalid choice.\n";
+    }
+}
+
+int main() {
+    int choice;
+    while (true) {
+        cout << "1. Create Tournament\n2. List Tournaments\n3. Approve Tournament\n4. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+        cin.ignore();
+        if (choice == 1) createTournament();
+        else if (choice == 2) listTournaments();
+        else if (choice == 3) approveTournament();
+        else break;
+    }
+    return 0;
+}
