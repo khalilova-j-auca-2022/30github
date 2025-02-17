@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main() {
+    srand(time(0));
+    int secretNumber = rand() % 100 + 1;
+    int guess;
+    int attempts = 0;
+
+    cout << "Добро пожаловать в игру 'Угадай число'!" << endl;
+    cout << "Я загадал число от 1 до 100. Попробуй угадать его!" << endl;
+
+    do {
+        cout << "Введите ваше предположение: ";
+        cin >> guess;
+        attempts++;
+
+        if (guess > secretNumber) {
+            cout << "Мое число меньше. Попробуйте снова!" << endl;
+        } else if (guess < secretNumber) {
+            cout << "Мое число больше. Попробуйте снова!" << endl;
+        } else {
+            cout << "Поздравляю! Вы угадали число " << secretNumber << " за " << attempts << " попыток!" << endl;
+        }
+    } while (guess != secretNumber);
+
+    return 0;
+}
