@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+void playRockPaperScissors() {
+    srand(time(0));
+    string choices[] = {"Камень", "Ножницы", "Бумага"};
+    int computerChoice = rand() % 3;
+    int userChoice;
+    
+    cout << "Добро пожаловать в игру Камень-Ножницы-Бумага!" << endl;
+    cout << "Выберите: 0 - Камень, 1 - Ножницы, 2 - Бумага: ";
+    cin >> userChoice;
+    
+    if (userChoice < 0 || userChoice > 2) {
+        cout << "Неверный выбор. Попробуйте снова." << endl;
+        return;
+    }
+    
+    cout << "Вы выбрали: " << choices[userChoice] << endl;
+    cout << "Компьютер выбрал: " << choices[computerChoice] << endl;
+    
+    if (userChoice == computerChoice) {
+        cout << "Ничья!" << endl;
+    } else if ((userChoice == 0 && computerChoice == 1) ||
+               (userChoice == 1 && computerChoice == 2) ||
+               (userChoice == 2 && computerChoice == 0)) {
+        cout << "Вы выиграли!" << endl;
+    } else {
+        cout << "Компьютер выиграл!" << endl;
+    }
+}
+
+int main() {
+    playRockPaperScissors();
+    return 0;
+}
