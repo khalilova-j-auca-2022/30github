@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Функция для отображения списка задач
+void showTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Ваш список задач пуст.\n";
+    } else {
+        cout << "Ваши задачи:\n";
+        for (size_t i = 0; i < tasks.size(); i++) {
+            cout << i + 1 << ". " << tasks[i] << endl;
+        }
+    }
+}
+
+int main() {
+    vector<string> tasks;
+    int choice;
+
+    while (true) {
+        cout << "\nМеню:\n";
+        cout << "1. Добавить задачу\n";
+        cout << "2. Показать задачи\n";
+        cout << "3. Удалить задачу\n";
+        cout << "4. Выйти\n";
+        cout << "Выберите действие: ";
+        cin >> choice;
+        cin.ignore(); // Очищаем буфер после ввода числа
+
+        if (choice == 1) {
+            string task;
+            cout << "Введите новую задачу: ";
+            getline(cin, task);
+            tasks.push_back(task);
+            cout << "Задача добавлена!\n";
+
+        } else if (choice == 2) {
+            showTasks(tasks);
+
+        } else if (choice == 3) {
+            showTasks(tasks);
+            if (!tasks.empty()) {
+                int index;
+                cout << "Введите номер задачи для удаления: ";
+                cin >> index;
+                if (index > 0 && index <= tasks.size()) {
+                    tasks.erase(tasks.begin() + index - 1);
+                    cout << "Задача удалена!\n";
+                } else {
+                    cout << "Неверный номер задачи.\n";
+                }
+            }
+
+        } else if (choice == 4) {
+            cout << "Выход из программы...\n";
+            break;
+        } else {
+            cout << "Неверный ввод! Попробуйте снова.\n";
+        }
+    }
+
+    return 0;
+}
