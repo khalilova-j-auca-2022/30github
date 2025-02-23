@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+// Функция для проверки, является ли число простым
+bool isPrime(int num) {
+    if (num < 2) return false; // Простые числа начинаются с 2
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) return false; // Если делится на i без остатка - не простое
+    }
+    return true;
+}
+
+int main() {
+    int number;
+    cout << "Введите число: ";
+    cin >> number;
+
+    if (isPrime(number)) {
+        cout << number << " - простое число.\n";
+    } else {
+        cout << number << " - не является простым числом.\n";
+    }
+
+    return 0;
+}
