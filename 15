@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int num, original, reversed = 0;
+    
+    cout << "Введите число: ";
+    cin >> num;
+    
+    original = num;  // сохраняем исходное число
+
+    // Разворачиваем число: последовательно извлекаем цифры и строим перевёрнутое число
+    while (num > 0) {
+        int digit = num % 10;   // получаем последнюю цифру
+        reversed = reversed * 10 + digit; // добавляем цифру к перевёрнутому числу
+        num /= 10;  // удаляем последнюю цифру
+    }
+
+    // Сравниваем исходное число с перевёрнутым
+    if (original == reversed)
+        cout << "Число является палиндромом." << endl;
+    else
+        cout << "Число не является палиндромом." << endl;
+
+    return 0;
+}
