@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int num;
+    cout << "Введите число: ";
+    cin >> num;
+    bool isEven = (num % 2 == 0);
+    
+    if (isEven) {
+        cout << "Число " << num << " является четным." << endl;
+    } else {
+        cout << "Число " << num << " является нечетным." << endl;
+    }
+  
+    bool inRange = (num >= 10 && num <= 100);
+    
+    if (inRange) {
+        cout << "Число находится в диапазоне от 10 до 100." << endl;
+    } else {
+        cout << "Число не находится в диапазоне от 10 до 100." << endl;
+    }
+    
+    return 0;
+}
