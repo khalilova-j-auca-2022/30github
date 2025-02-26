@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <thread>
+#include <cstdlib> // для system()
+
+using namespace std;
+
+const int WIDTH = 40;
+const int HEIGHT = 20;
+
+// Функция для подсчёта живых соседей клетки (x, y)
+int countNeighbors(const vector<vector<bool>> &grid, int x, int y) {
+    int count = 0;
+    for (int i = -1; i <= 1; ++i) {
+        for (int j = -1; j <= 1; ++j) {
+            if (i == 0 && j == 0) continue; // пропускаем саму клетку
+            int newX = x + i;
+            int newY = y + j;
+            if (newX >= 0 && newX < HEIGHT && newY >= 0 && newY < WIDTH) {
+                if (grid[newX][newY]) count++;
+            }
+        }
+    }
+    return count;
+}
+
+// Функция для вывода сетки на экран
+void printGrid(const vector<vector<bool>> &grid) {
+    for (int i = 0; i < HEIGHT; ++i) {
+        for (int j = 0; j < WIDTH; ++j) {
+            cout << (grid[i][j] ? "O" : " ");
+        }
+        cout << "\n";
+    }
+}
+
+int main() {
+    // Инициализация сетки с заданными размерами (все клетки "мертвые")
+    vector<vector<bool>> grid(HEIGHT, vector<bool>(WIDTH, false));
+    
+    // Пример: инициализация "глайдера" (скользящего паттерна)
+    grid[1][2] = true;
+    grid[2][3] = true;
+    grid[3][1] = true;
+    grid[3][2] = true;
+    grid[3][3] = true;
+    
+    while (true) {
+        // Очистка экрана (на Windows используйте "cls")
+        system("clear");
+        
+        printGrid(grid);
+        
+        // Создаем копию сетки для следующего поколения
+        vector<vector<bool>> next = grid;
+        for (int i = 0; i < HEIGHT; ++i) {
+            for (int j = 0; j < WIDTH; ++j) {
+                int neighbors = countNeighbors(grid, i, j);
+                // Применяем правила Игры жизни:
+                // 1. Любая живая клетка с двумя или тремя живыми соседями остается живой.
+                // 2. Любая мертвая клетка с тремя живыми соседями оживает.
+                // 3. В противном случае клетка умирает или остается мертвой.
+                if (grid[i][j]) {
+                    next[i][j] = (neighbors == 2 || neighbors == 3);
+                } else {
+                    next[i][j] = (neighbors == 3);
+                }
+            }
+        }
+        grid = next;
+        // Пауза между поколениями (200 миллисекунд)
+        this_thread::sleep_for(chrono::milliseconds(200));
+    }
+    
+    return 0;
+}
