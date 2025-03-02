@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Matrix {
+private:
+    vector<vector<int>> mat;
+    int rows, cols;
+
+public:
+    Matrix(int r, int c) : rows(r), cols(c) {
+        mat.resize(rows, vector<int>(cols, 0));
+    }
+
+    void inputMatrix() {
+        cout << "Введите элементы матрицы (" << rows << "x" << cols << "):\n";
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                cin >> mat[i][j];
+            }
+        }
+    }
+
+    void displayMatrix() const {
+        cout << "Матрица:\n";
+        for (const auto &row : mat) {
+            for (int elem : row) {
+                cout << elem << "\t";
+            }
+            cout << endl;
+        }
+    }
+
+    Matrix operator+(const Matrix &other) const {
+        if (rows != other.rows || cols != other.cols) {
+            throw runtime_error("Ошибка! Размеры матриц не совпадают.");
+        }
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.mat[i][j] = mat[i][j] + other.mat[i][j];
+            }
+        }
+        return result;
+    }
+
+    Matrix operator*(const Matrix &other) const {
+        if (cols != other.rows) {
+            throw runtime_error("Ошибка! Количество столбцов первой матрицы должно совпадать с количеством строк второй.");
+        }
+        Matrix result(rows, other.cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                for (int k = 0; k < cols; k++) {
+                    result.mat[i][j] += mat[i][k] * other.mat[k][j];
+                }
+            }
+        }
+        return result;
+    }
+};
+
+int main() {
+    int rows, cols;
+    
+    cout << "Введите количество строк и столбцов первой матрицы: ";
+    cin >> rows >> cols;
+    Matrix mat1(rows, cols);
+    mat1.inputMatrix();
+
+    cout << "Введите количество строк и столбцов второй матрицы: ";
+    cin >> rows >> cols;
+    Matrix mat2(rows, cols);
+    mat2.inputMatrix();
+
+    try {
+        cout << "\nРезультат сложения:\n";
+        Matrix sum = mat1 + mat2;
+        sum.displayMatrix();
+    } catch (const exception &e) {
+        cout << e.what() << endl;
+    }
+
+    try {
+        cout << "\nРезультат умножения:\n";
+        Matrix product = mat1 * mat2;
+        product.displayMatrix();
+    } catch (const exception &e) {
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
