@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cmath>
+
+class Complex {
+private:
+    double real, imag;
+
+public:
+    Complex(double r = 0, double i = 0) : real(r), imag(i) {}
+
+    void display() const {
+        std::cout << real << (imag >= 0 ? " + " : " - ") << fabs(imag) << "i" << std::endl;
+    }
+
+    Complex operator+(const Complex &other) const {
+        return Complex(real + other.real, imag + other.imag);
+    }
+
+    Complex operator-(const Complex &other) const {
+        return Complex(real - other.real, imag - other.imag);
+    }
+
+    Complex operator*(const Complex &other) const {
+        return Complex(real * other.real - imag * other.imag, real * other.imag + imag * other.real);
+    }
+
+    Complex operator/(const Complex &other) const {
+        double denom = other.real * other.real + other.imag * other.imag;
+        if (denom == 0) {
+            throw std::runtime_error("Ошибка! Деление на ноль.");
+        }
+        return Complex((real * other.real + imag * other.imag) / denom,
+                       (imag * other.real - real * other.imag) / denom);
+    }
+};
+
+int main() {
+    double r1, i1, r2, i2;
+    char op;
+    
+    std::cout << "Введите первое комплексное число (реальная и мнимая часть): ";
+    std::cin >> r1 >> i1;
+    Complex num1(r1, i1);
+    
+    std::cout << "Введите оператор (+, -, *, /): ";
+    std::cin >> op;
+    
+    std::cout << "Введите второе комплексное число (реальная и мнимая часть): ";
+    std::cin >> r2 >> i2;
+    Complex num2(r2, i2);
+
+    Complex result;
+    try {
+        switch (op) {
+            case '+': result = num1 + num2; break;
+            case '-': result = num1 - num2; break;
+            case '*': result = num1 * num2; break;
+            case '/': result = num1 / num2; break;
+            default: 
+                std::cerr << "Ошибка! Неверный оператор.\n";
+                return 1;
+        }
+        
+        std::cout << "Результат: ";
+        result.display();
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+    
+    return 0;
+}
