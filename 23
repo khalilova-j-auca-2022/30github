@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    // Данные из условия
+    int total_students = 24;
+    int dancing_students = 13;
+    int drawing_or_drama_students = 17;
+    int dancing_and_drama_students = 6;
+    int all_three_courses_students = 4;
+    int no_course_students = 3;
+    
+    // Количество студентов, выбравших хотя бы один курс
+    int at_least_one_course = total_students - no_course_students;
+    
+    // Используем принцип включения-исключения для нахождения студентов, выбравших танцы и рисование
+    int drawing_and_dancing_students = dancing_students - (at_least_one_course - drawing_or_drama_students) - dancing_and_drama_students;
+    
+    // Вывод результата
+    cout << "Number of students who chose both drawing and dancing: " << drawing_and_dancing_students << endl;
+    
+    return 0;
+}
