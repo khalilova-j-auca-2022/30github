@@ -1,0 +1,34 @@
+#include <iostream>
+#include <algorithm> // для std::gcd (C++17 и выше)
+using namespace std;
+
+long long comb(int n, int k) {
+    if(k > n) return 0;
+    if(k == 0 || k == n) return 1;
+    long long res = 1;
+    k = min(k, n - k);
+    for(int i = 0; i < k; ++i) {
+        res *= (n - i);
+        res /= (i + 1);
+    }
+    return res;
+}
+
+int main() {
+    long long ways_5_3_2 = comb(10, 5) * comb(5, 3);
+    long long total_3pow10 = 1;
+    for(int i = 0; i < 10; ++i) total_3pow10 *= 3;
+
+    long long total_not_all_in_one = total_3pow10 - 3;
+    long long numerator   = ways_5_3_2;
+    long long denominator = total_not_all_in_one;
+
+    long long g = std::gcd(numerator, denominator);
+    numerator   /= g;
+    denominator /= g;
+
+    cout << numerator << "/" << denominator << "\n";
+    cout << static_cast<double>(ways_5_3_2) / static_cast<double>(total_not_all_in_one) << "\n";
+
+    return 0;
+}
