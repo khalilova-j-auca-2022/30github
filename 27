@@ -1,0 +1,31 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+long long comb(int n, int k) {
+    if (k > n) return 0;
+    if (k == 0 || k == n) return 1;
+    long long res = 1;
+    k = min(k, n - k);
+    for (int i = 0; i < k; ++i) {
+        res *= (n - i);
+        res /= (i + 1);
+    }
+    return res;
+}
+
+int main() {
+    long long ways = comb(10, 5) * comb(5, 3);
+    long long total = 1;
+    for (int i = 0; i < 10; ++i)
+        total *= 3;
+    long long totalNotAllOne = total - 3;
+    long long numerator = ways;
+    long long denominator = totalNotAllOne;
+    long long g = std::gcd(numerator, denominator);
+    numerator /= g;
+    denominator /= g;
+    cout << numerator << "/" << denominator << "\n";
+    cout << static_cast<double>(ways) / static_cast<double>(totalNotAllOne) << "\n";
+    return 0;
+}
